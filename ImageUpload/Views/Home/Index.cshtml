@@ -6,8 +6,28 @@
 <div id="dropArea">
     Drop your Files here
 </div>
-<h4>Uploaded Files: </h4>
-<ul class="list-group" id="uploadList"></ul>
+<h4>Current Photos: </h4>
+<ul class="list-group" id="uploadList">
+    @{ 
+        foreach (var f in ViewBag.photos)
+        {
+           <li class='list-group-item'>
+                <div class='row'>
+                    <div class='col-sm-3 text-center'>
+                        <img src='@f' style='max-height: 100px; max-width: 200px'/>
+                    </div>
+                    <div class='col-sm-3'>
+                        
+                    </div>
+                    <div class='col-sm-offset-3 col-sm-3'>
+                        <span class='btn btn-danger'>REMOVE PHOTO</span>
+                    </div>
+                </div>
+            </li>
+        }
+    }
+
+</ul>
 
 
 
@@ -54,6 +74,26 @@
                     $("#uploadList").append(out);
                  }
             })
+
+            $(document).on("click", ".btn-danger", function (e) {
+                var picrow = $(this).parents(".list-group-item")
+                var filepath = picrow.find("img").attr("src")
+                var url = APP_BASE + "/Home/DeleteImage";
+                $.ajax({
+                    method: 'POST',
+                    url: url,
+                    data: {
+                        filepath: filepath
+                    },
+                    success: function (data) {
+                        picrow.slideUp(500).delay(2000, function (e) { $(this).remove(); });
+                    },
+                    dataType: 'JSON'
+                })
+                
+            })
+
+
         })
 
 
