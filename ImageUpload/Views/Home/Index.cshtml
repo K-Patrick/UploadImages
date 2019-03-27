@@ -38,8 +38,21 @@
                     $("#dropArea").html('file(s) uploaded successfully');
                 },
                 uploadFinished: function (i, file, response, time) {
-                    $("#uploadList").append("<li class='list-group-item'>" + file.name + "</li>")
-                }
+                    var out = "<li class='list-group-item'>";
+                    out += "<div class='row'>";
+                    out += "<div class='col-sm-3'>"
+                    out += "<img src='" + response[0] + "' style='max-height: 100px; max-width: 200px'/>"
+                    out += "</div>"
+                    out += "<div class='col-sm-3'>";
+                    out += file.name
+                    out += "</div>";
+                    out += "<div class='col-sm-offset-3 col-sm-3'>"
+                    out += "<span class='btn btn-danger'>REMOVE PHOTO</span>"
+                    out += "</div>";
+                    out += "</div>";
+                    out += "</li>";
+                    $("#uploadList").append(out);
+                 }
             })
         })
 
